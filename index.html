@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Jogos - 12 Dezenas Fixas</title>
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Estratégia das 12 Fixas - LOTOFÁCIL</h1>
+        <p>Selecione 12 dezenas para fixar e 1 dezena para excluir. O sistema gerará 4 jogos com 15 dezenas, organizando as dezenas restantes em grupos de 3.</p>
+        
+
+
+        <form id="formJogo">
+            <label for="dezenasFixas">Digite exatamente 12 dezenas fixas (separadas por vírgulas):</label>
+            <input type="text" id="dezenasFixas" name="dezenasFixas" placeholder="Ex: 1, 2, 3, ..., 12" required>
+
+            <label for="dezenaExcluir">Digite a dezena a ser excluída:</label>
+            <input type="number" id="dezenaExcluir" name="dezenaExcluir" min="1" max="25" required>
+
+            <button type="button" id="gerarJogos">Gerar Jogos</button>
+        </form>
+
+        <div id="resultados">
+            <!-- Resultados dos jogos gerados aparecerão aqui -->
+        </div>
+    </div>
+
+    <script src="./js/script.js"></script>
+</body>
+</html>
