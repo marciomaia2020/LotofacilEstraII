@@ -29,7 +29,7 @@ function gerarJogos() {
     const dezenasRestantes = todasAsDezenas.filter(num => !dezenasInput.includes(num));
 
     // Gerar 4 jogos com as mesmas 12 dezenas e 3 dezenas adicionais de dezenasRestantes
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 4; i++) {
         const jogo = [...dezenasInput]; // As 12 dezenas fixas
         const tresDezenasExtras = dezenasRestantes.slice(i * 3, i * 3 + 3); // Seleciona 3 dezenas para completar
         jogo.push(...tresDezenasExtras);
