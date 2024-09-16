@@ -3,31 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerador de Jogos - 12 Dezenas Fixas</title>
+    <title>Estratégia II - Lotofácil</title>
     <link rel="stylesheet" href="./css/styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>Estratégia das 12 Fixas - LOTOFÁCIL</h1>
-        <p>Selecione 12 dezenas para fixar e 1 dezena para excluir. O sistema gerará 4 jogos com 15 dezenas, organizando as dezenas restantes em grupos de 3.</p>
-        
+        <h1>Estratégia das 12 Dezenas - LOTOFÁCIL</h1>
+        <p>Escolha 12 dezenas e exclua 1. Serão gerados 4 jogos com 15 dezenas cada.</p>
 
+        <div>
+            <label for="dezenas">Escolha 12 dezenas (máximo 12):</label>
+            <input type="text" id="dezenas" placeholder="Ex: 1, 2, 3, ..." maxlength="35">
+            <p id="mensagemErro" style="color:red;"></p>
+        </div>
 
-        <form id="formJogo">
-            <label for="dezenasFixas">Digite exatamente 12 dezenas fixas (separadas por vírgulas):</label>
-            <input type="text" id="dezenasFixas" name="dezenasFixas" placeholder="Ex: 1, 2, 3, ..., 12" required>
+        <div>
+            <label for="excluir">Exclua 1 dezena:</label>
+            <input type="text" id="excluir" placeholder="Ex: 5" maxlength="2">
+            <p id="erroExcluir" style="color:red;"></p>
+        </div>
 
-            <label for="dezenaExcluir">Digite a dezena a ser excluída:</label>
-            <input type="number" id="dezenaExcluir" name="dezenaExcluir" min="1" max="25" required>
-
-            <button type="button" id="gerarJogos">Gerar Jogos</button>
-        </form>
+        <button id="gerarJogos">GERAR JOGOS</button>
 
         <div id="resultados">
-            <!-- Resultados dos jogos gerados aparecerão aqui -->
+            <!-- Jogos Gerados Aparecerão Aqui -->
+        </div>
+
+        <!-- Botões para exportação -->
+        <div class="export-buttons">
+            <button id="exportarExcel" disabled>Exportar para Excel</button>
+            <button id="exportarTxt" disabled>Exportar para TXT</button>
         </div>
     </div>
 
-    <script src="./js/script.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+     <script src="./js/script.js"></script>
 </body>
 </html>
+
+
+

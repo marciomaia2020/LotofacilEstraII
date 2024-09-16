@@ -1,0 +1,253 @@
+em um universo de 25 dezenas (destacar as dezenas que foram selecionadas/escolhidas e fixada
+o usuário deve selecionar/escolher 12 dezenas
+o usuário deve selecionar/escolher 1 dezena (para fixar)
+Criar um botão para Gerar Jogos
+Irá sobrar doze dezenas divida entre 4 grupos.. 
+os jogos gerados dever ser apenas 4 sendo que cada um com as 12 dezenas (selecionadas) e mais 3 dos grupos gerados.
+gere o jogos em ordem crescente.. 
+
+
+
+validações em tempo real (aparece abaixo do input)
+as desenas selecionadas pode se qualquer uma dentre as 25
+a dezena fizaxa não pode estar entre as dezenas selecionadas
+o input/select não pode deixar que o usuário ultrapasse a quantia de doze dezenas...
+
+umas das validações que não estão sendo compridas é o fato do usuário poder inserir/selecionar mais que 12 dezenas.. NÃO PODE, NÃO DEVE.. DEIXAR.. chegou em 12 não pode selecionar/inserir mais.. 
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estratégia das 12 Dezenas</title>
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Estratégia das 15 Dezenas - LOTOFÁCIL</h1>
+        <p>Escolha 12 dezenas e exclua 1. Serão gerados 4 jogos com 15 dezenas cada.</p>
+
+        <div>
+            <label for="dezenas">Escolha 12 dezenas (máximo 12):</label>
+            <input type="text" id="dezenas" placeholder="Ex: 1, 2, 3, ..." maxlength="35">
+            <p id="mensagemErro" style="color:red;"></p>
+        </div>
+
+        <div>
+            <label for="excluir">Exclua 1 dezena:</label>
+            <input type="text" id="excluir" placeholder="Ex: 5" maxlength="2">
+        </div>
+
+        <button id="gerarJogos">GERAR JOGOS</button>
+
+        <div id="resultados">
+            <!-- Jogos Gerados Aparecerão Aqui -->
+        </div>
+
+        <!-- Botões para exportação -->
+        <div class="export-buttons">
+            <button id="exportarExcel" disabled>Exportar para Excel</button>
+            <button id="exportarTxt" disabled>Exportar para TXT</button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+ 
+
+    <script src="./js/script.js"></script>
+</body>
+</html>
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 20px;
+    padding: 0;
+    color: #A55592;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    text-align: center;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+button {
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    background-color: #A55592;
+    color: #fff;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #dcbcd5;
+    color: black;
+}
+
+.erro {
+    color: red;
+    font-size: 12px;
+}
+
+#resultados {
+    margin-top: 20px;
+    text-align: left;
+}
+
+document.getElementById('gerarJogos').addEventListener('click', gerarJogos);
+
+function gerarJogos() {
+    const dezenasInput = document.getElementById('dezenas').value.split(',').map(Number);
+    const excluirInput = parseInt(document.getElementById('excluirDezena').value);
+    const erroDezenas = document.getElementById('erroDezenas');
+    const erroExcluir = document.getElementById('erroExcluir');
+    let jogos = [];
+    erroDezenas.textContent = '';
+    erroExcluir.textContent = '';
+
+    // Validação das 12 dezenas
+    if (dezenasInput.length !== 12 || dezenasInput.some(num => num < 1 || num > 25 || isNaN(num))) {
+        erroDezenas.textContent = 'Por favor, escolha exatamente 12 dezenas válidas (1 a 25).';
+        return;
+    }
+
+    // Validação de exclusão
+    if (isNaN(excluirInput) || excluirInput < 1 || excluirInput > 25) {
+        erroExcluir.textContent = 'Por favor, escolha uma dezena válida para excluir (1 a 25).';
+        return;
+    }
+
+    // Verificar se a dezena excluída está entre as 12 escolhidas
+    if (!dezenasInput.includes(excluirInput)) {
+        erroExcluir.textContent = 'A dezena a ser excluída deve estar entre as 12 escolhidas.';
+        return;
+    }
+
+    // Remover a dezena excluída
+    const dezenasRestantes = dezenasInput.filter(num => num !== excluirInput);
+
+    // Distribuir as dezenas restantes e gerar os jogos
+    for (let i = 0; i < 4; i++) {
+        const jogo = [...dezenasRestantes];
+        const tresDezenasExtras = gerarDezenasExtras(jogo);
+        jogo.push(...tresDezenasExtras);
+        jogo.sort((a, b) => a - b);
+        jogos.push(jogo);
+    }
+
+    mostrarJogos(jogos);
+}
+
+function gerarDezenasExtras(dezenasRestantes) {
+    const todasAsDezenas = Array.from({ length: 25 }, (_, i) => i + 1);
+    const dezenasDisponiveis = todasAsDezenas.filter(num => !dezenasRestantes.includes(num));
+    const dezenasExtras = [];
+
+    // Selecionar 3 dezenas extras de forma aleatória
+    while (dezenasExtras.length < 3) {
+        const randomIndex = Math.floor(Math.random() * dezenasDisponiveis.length);
+        dezenasExtras.push(dezenasDisponiveis.splice(randomIndex, 1)[0]);
+    }
+
+    return dezenasExtras;
+}
+
+function mostrarJogos(jogos) {
+    const resultadosDiv = document.getElementById('resultados');
+    resultadosDiv.innerHTML = '';
+
+    jogos.forEach((jogo, index) => {
+        const jogoDiv = document.createElement('div');
+        jogoDiv.textContent = `Jogo ${index + 1}: ${jogo.join(', ')}`;
+        resultadosDiv.appendChild(jogoDiv);
+    });
+}
+<script>
+        let jogos = [];
+        const totalNumeros = 25;
+        const totalDezenas = 15;
+        document.getElementById('gerarJogos').addEventListener('click', gerarJogos);
+        document.getElementById('exportarExcel').addEventListener('click', exportarParaExcel);
+        document.getElementById('exportarTxt').addEventListener('click', exportarParaTXT);
+
+        function gerarJogos() {
+            const dezenasInput = document.getElementById('dezenas').value.split(',').map(Number).filter(Boolean);
+            const excluirInput = Number(document.getElementById('excluir').value);
+
+            if (dezenasInput.length !== 12) {
+                document.getElementById('mensagemErro').textContent = "Você deve escolher exatamente 12 dezenas.";
+                return;
+            } else if (isNaN(excluirInput) || dezenasInput.includes(excluirInput)) {
+                document.getElementById('mensagemErro').textContent = "Exclua apenas 1 dezena que não esteja entre as escolhidas.";
+                return;
+            } else {
+                document.getElementById('mensagemErro').textContent = '';
+            }
+
+            // Gerar os 4 jogos
+            jogos = [];
+            for (let i = 0; i < 4; i++) {
+                const dezenasRestantes = dezenasInput.slice();
+                // Dividir em 4 grupos e adicionar uma dezena restante em cada jogo
+                dezenasRestantes.push(excluirInput + i + 1);
+                jogos.push(dezenasRestantes);
+            }
+
+            mostrarJogos(jogos);
+            document.getElementById('exportarExcel').disabled = false;
+            document.getElementById('exportarTxt').disabled = false;
+        }
+
+        function mostrarJogos(jogos) {
+            const resultadosDiv = document.getElementById('resultados');
+            resultadosDiv.innerHTML = '';
+
+            jogos.forEach((jogo, index) => {
+                const jogoDiv = document.createElement('div');
+                jogoDiv.className = 'jogo';
+                
+                const jogoLabel = document.createElement('div');
+                jogoLabel.className = 'jogo-label';
+                jogoLabel.textContent = `Jogo ${index + 1}:`;
+                jogoDiv.appendChild(jogoLabel);
+                
+                jogoDiv.innerHTML += jogo.join(', ');
+                resultadosDiv.appendChild(jogoDiv);
+            });
+        }
+
+        function exportarParaExcel() {
+            const wb = XLSX.utils.book_new();
+            const header = ['Jogo', ...Array(totalDezenas).fill(null).map((_, i) => `Número ${i + 1}`)];
+            const data = jogos.map((jogo, index) => [`Jogo ${index + 1}`, ...jogo]);
+
+            const sheetData = [header, ...data];
+            const ws = XLSX.utils.aoa_to_sheet(sheetData);
+            XLSX.utils.book_append_sheet(wb, ws, 'Jogos');
+            XLSX.writeFile(wb, 'jogos_lotofacil.xlsx');
+        }
+
+        function exportarParaTXT() {
+            const texto = jogos.map(jogo => jogo.join(' ')).join('\n');
+            const blob = new Blob([texto], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'jogos_lotofacil.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+		
+		
