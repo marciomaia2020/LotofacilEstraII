@@ -9,17 +9,17 @@
 <body>
     <div class="container">
         <h1>Estratégia das 12 Dezenas - LOTOFÁCIL</h1>
-        <p>Escolha 12 dezenas e exclua 1.</p>
-        <p>Serão gerados 4 jogos com 15 dezenas cada.</p>
+        <p>Escolha <b>12 dezenas</b> e <b>exclua 1</b>.</p>
+        <p>Serão gerados <b>4 jogos</b> com 15 dezenas cada.</p>
 
         <div>
-            <label for="dezenas">Escolha 12 dezenas (máximo 12):</label>
+            <label for="dezenas">Escolha no máximo 12 dezenas:<small>elas serão fixas</small></label>
             <input type="text" id="dezenas" placeholder="Ex: 1, 2, 3, ..." maxlength="35">
             <p id="mensagemErro" style="color:red;"></p>
         </div>
 
         <div>
-            <label for="excluir">Exclua 1 dezena:</label>
+            <label for="excluir">Exclua 1 dezena:<small>deve ser diferente da fixa</small></label>
             <input type="text" id="excluir" placeholder="Ex: 5" maxlength="2">
             <p id="erroExcluir" style="color:red;"></p>
         </div>

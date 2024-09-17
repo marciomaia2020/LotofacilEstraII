@@ -83,7 +83,7 @@ input {
 
 button {
     padding: 10px 20px;
-    background-color: #28a745;
+    background-color: #A55592;
     color: white;
     border: none;
     border-radius: 5px;
@@ -96,7 +96,7 @@ button:disabled {
 }
 
 button:not(:disabled):hover {
-    background-color: #218838;
+    background-color: #A55592;
 }
 
 #resultados {
@@ -117,7 +117,7 @@ button:not(:disabled):hover {
     text-align: center;
 }
 .lista{
-    color:#218838;
+    color:#A55592;
     text-align: justify;
  
 }
