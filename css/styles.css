@@ -115,3 +115,8 @@ button:not(:disabled):hover {
     margin-top: 20px;
     text-align: center;
 }
+.lista{
+    color:#218838;
+    text-align: justify;
+    line-height: 1.6;
+}

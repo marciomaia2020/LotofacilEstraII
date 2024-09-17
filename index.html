@@ -9,7 +9,8 @@
 <body>
     <div class="container">
         <h1>Estratégia das 12 Dezenas - LOTOFÁCIL</h1>
-        <p>Escolha 12 dezenas e exclua 1. Serão gerados 4 jogos com 15 dezenas cada.</p>
+        <p>Escolha 12 dezenas e exclua 1.</p>
+        <p>Serão gerados 4 jogos com 15 dezenas cada.</p>
 
         <div>
             <label for="dezenas">Escolha 12 dezenas (máximo 12):</label>
@@ -34,6 +35,19 @@
             <button id="exportarExcel" disabled>Exportar para Excel</button>
             <button id="exportarTxt" disabled>Exportar para TXT</button>
         </div>
+
+        <ol class="lista">
+            <li>Em um universo de 25 dezenas o sistema irá separar as 12 dezenas que voçê escolher.</li>
+            <li>O sistema também irá excluir destas 25 exatamente a dezena que escolhida por voçê.</li>
+            <li>Irá sobrar exatamente 12 dezenas.</li>
+            <li>Estas 12 dezenas serão redistribuidas em um grupo de 4.</li>
+            <li>Elas serão adicionadas nas 12 dezenas que foram escolhidas menos uma que foi excluida.</li>
+            <li>Serão gerados apenas 4 jogos aleatorios (com as 12 dezenas) mais as 3 de cada grupo.</li>
+        </ol>
+
+
+
+
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
