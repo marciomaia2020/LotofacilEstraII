@@ -4,6 +4,18 @@ document.getElementById('exportarTxt').addEventListener('click', exportarParaTXT
 
 let jogos = []; // Para armazenar os jogos gerados
 
+// Validação em tempo real para o campo de dezenas
+document.getElementById('dezenas').addEventListener('input', function() {
+    const dezenasInput = this.value.split(',').map(Number).filter(Boolean);
+    const erroDezenas = document.getElementById('mensagemErro');
+
+    if (dezenasInput.length > 12) {
+        erroDezenas.textContent = "Você só pode escolher exatamente 12 dezenas.";
+    } else {
+        erroDezenas.textContent = ""; // Limpar a mensagem de erro
+    }
+});
+
 function gerarJogos() {
     const dezenasInput = document.getElementById('dezenas').value.split(',').map(Number).filter(Boolean);
     const excluirInput = Number(document.getElementById('excluir').value);
@@ -54,8 +66,9 @@ function mostrarJogos(jogos) {
         jogoLabel.className = 'jogo-label';
         jogoLabel.textContent = `Jogo ${index + 1}:`;
         jogoDiv.appendChild(jogoLabel);
-        
-        jogoDiv.innerHTML += jogo.join(', ');
+
+        // Adiciona um espaço entre o rótulo e o jogo
+        jogoDiv.innerHTML += '<br>' + jogo.join(', ');
         resultadosDiv.appendChild(jogoDiv);
     });
 }
